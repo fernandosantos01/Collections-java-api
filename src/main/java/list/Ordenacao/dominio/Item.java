@@ -1,4 +1,4 @@
-package main.java.list.Exercicio.dominio;
+package main.java.list.Ordenacao.dominio;
 
 public class Item {
     private int quantidade;

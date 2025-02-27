@@ -1,6 +1,6 @@
-package main.java.list.Exercicio.test;
+package main.java.list.Ordenacao.test;
 
-import main.java.list.Exercicio.dominio.CarrinhoDeCompras;
+import main.java.list.Ordenacao.dominio.CarrinhoDeCompras;
 
 public class CarrinhoDeComprasTest {
     public static void main(String[] args) {

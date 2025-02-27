@@ -1,4 +1,4 @@
-package main.java.list.Exercicio.dominio;
+package main.java.list.Ordenacao.dominio;
 
 import java.util.ArrayList;
 import java.util.List;
