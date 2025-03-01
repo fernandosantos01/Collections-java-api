@@ -20,19 +20,19 @@ public boolean equals(Object o) {
 <b>O que ele faz:</b>
 
 #### 1. Verifica se o objeto é nulo:
-- Se o for `null`, retorna `false`, pois um objeto não pode ser igual a null.
+- Se o for `null`, retorna `false`, pois um objeto não pode ser igual a `null`.
 #### 2. Verifica se os objetos são da mesma classe:
-- Usa `getClass() != o.getClass()` para garantir que os objetos sejam da mesma classe. Se não forem, retorna false.
+- Usa `getClass() != o.getClass()` para garantir que os objetos sejam da mesma classe. Se não forem, retorna `false`.
 #### 3. Faz o cast do objeto:
 - Converte o objeto o para o tipo `PalavrasUnicas (usando (PalavrasUnicas) o)`.
 #### 4. Compara os atributos relevantes:
 - Usa `Objects.equals(getPalavra()`, `that.getPalavra())` para comparar o atributo palavra dos dois objetos. Se forem iguais, retorna `true`; caso contrário, retorna `false`.
 
 <b>Quando usar:</b>
-- O equals é usado quando você precisa comparar dois objetos para verificar se eles são semanticamente iguais (ou seja, se representam a mesma coisa).
+- O `equals` é usado quando você precisa comparar dois objetos para verificar se eles são semanticamente iguais (ou seja, se representam a mesma coisa).
 
 ### 2. O que é o método hashCode?
-O método hashCode retorna um valor numérico (um int) que representa o objeto. Ele é usado principalmente em estruturas de dados que dependem de hashing, como HashSet, HashMap e HashTable.
+O método `hashCode` retorna um valor numérico (um `int`) que representa o objeto. Ele é usado principalmente em estruturas de dados que <b>dependem de hashing</b>, como `HashSet`, `HashMap` e `HashTable`.
 ```java
 @Override
 public int hashCode() {
@@ -42,30 +42,30 @@ public int hashCode() {
 <b>O que ele faz:</b>
 #### 1. Gera um código hash:
 
-- Usa Objects.hashCode(getPalavra()) para gerar um código hash com base no atributo palavra.
+- Usa `Objects.hashCode(getPalavra())` para gerar um código hash com base no atributo `palavra`.
 
-#### 2. Garante consistência com o equals:
+#### 2. Garante consistência com o `equals`:
 
-- Se dois objetos são considerados iguais pelo método equals, eles devem retornar o mesmo valor de hashCode.
+- Se dois objetos são considerados iguais pelo método `equals`, eles devem retornar o mesmo valor de `hashCode`.
 
 <b>Quando usar:</b>
 
- - O hashCode é usado em estruturas de dados que dependem de hashing para armazenar e recuperar objetos de forma eficiente.
-### 3. Relação entre equals e hashCode:
-Existe um contrato entre equals e hashCode que deve ser respeitado:
+ - O `hashCode` é usado em estruturas de dados que dependem de hashing para armazenar e recuperar objetos de forma eficiente.
+### 3. Relação entre `equals` e `hashCode`:
+Existe um contrato entre `equals` e `hashCode` que deve ser respeitado:
 
 #### 1. Consistência:
 
-- Se dois objetos são iguais segundo o equals, eles devem ter o mesmo hashCode.
+- Se dois objetos são iguais segundo o `equals`, eles devem ter o mesmo `hashCode`.
 
-- No entanto, o inverso não é verdadeiro: dois objetos com o mesmo hashCode não precisam ser iguais segundo o equals.
+- No entanto, o inverso não é verdadeiro: dois objetos com o mesmo `hashCode` não precisam ser iguais segundo o `equals`.
 
 #### 2. Performance:
 
-- Estruturas como HashSet e HashMap usam o hashCode para determinar rapidamente onde um objeto deve ser armazenado ou buscado. Se o hashCode for bem implementado, a performance dessas estruturas será otimizada.
+- Estruturas como `HashSet` e `HashMap` usam o `hashCode` para determinar rapidamente onde um objeto deve ser armazenado ou buscado. Se o `hashCode` for bem implementado, a performance dessas estruturas será otimizada.
 
 ### 4. Exemplo prático:
-Vamos supor que você tenha a seguinte classe PalavrasUnicas:
+Vamos supor que você tenha a seguinte classe `PalavrasUnicas`:
 
 ```java
 import java.util.Objects;
@@ -101,7 +101,7 @@ public class PalavrasUnicas {
     }
 }
 ```
-<b>Testando o equals e hashCode:</b>
+<b>Testando o `equals` e `hashCode`:</b>
 ```java
 import java.util.HashSet;
 import java.util.Set;
@@ -151,20 +151,20 @@ Tamanho do HashSet: 2
 
     - Melhora a performance em estruturas baseadas em hashing.
 
-    - Garante que objetos iguais sejam armazenados no mesmo "bucket" em estruturas como HashSet ou HashMap.
+    - Garante que objetos iguais sejam armazenados no mesmo "bucket" em estruturas como `HashSet` ou `HashMap`.
 
 ### 6. Boas práticas:
-#### 1. Sobrescreva hashCode sempre que sobrescrever equals:
+#### 1. Sobrescreva `hashCode` sempre que sobrescrever `equals`:
 
 - Isso garante que o contrato entre os dois métodos seja respeitado.
 
-#### 2. Use Objects.equals e Objects.hashCode:
+#### 2. Use `Objects.equals` e `Objects.hashCode`:
 
-- Esses métodos ajudam a evitar erros comuns, como NullPointerException.
+- Esses métodos ajudam a evitar erros comuns, como `NullPointerException`.
 
 #### 3. Considere todos os atributos relevantes:
 
-- No equals e hashCode, inclua apenas os atributos que definem a igualdade do objeto.
+- No `equals` e `hashCode`, inclua apenas os atributos que definem a igualdade do objeto.
 ## FIXANDO A EXPLICAÇÃO DE CONSISTÊNCIA
 
 A consistência entre `equals` e `hashCode` é um contrato que deve ser seguido em Java. Ele estabelece que:
