@@ -1,7 +1,7 @@
 # SET
 
 <p align="center">
-<img src="https://github.com/fernandosantos01/Collections-java-api/blob/main/set-interface-hierarchy.png?raw=true" alt="Set interface hierarchy Java"><br>
+<img src="https://raw.githubusercontent.com/fernandosantos01/Collections-java-api/refs/heads/main/images/set-interface-hierarchy.png" alt="Set interface hierarchy Java"><br>
 <a href="https://data-flair.training/blogs/collection-framework-in-java/">Hierarchy of Collection Framework in Java </a>
 </p>
 
