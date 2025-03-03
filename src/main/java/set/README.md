@@ -1,335 +1,117 @@
-# EQUALS E HASHCODE
+# SET
 
 <p align="center">
-<img src="https://miro.medium.com/v2/resize:fit:500/1*x5UK5p0mqcr3EBKwlKNRwg.png" alt="Equal() and hashcode() in Java"><br>
-<a href="https://medium.com/javarevisited/equal-and-hashcode-in-java-e599d6db1a3">Equal() and hashcode() in Java </a>
+<img src="https://github.com/fernandosantos01/Collections-java-api/blob/main/set-interface-hierarchy.png?raw=true" alt="Set interface hierarchy Java"><br>
+<a href="https://data-flair.training/blogs/collection-framework-in-java/">Hierarchy of Collection Framework in Java </a>
 </p>
 
-### 1. O que é o método equals?
-O método `equals` é usado para comparar dois objetos e verificar se eles são iguais. Ele é definido na classe `Object` (a classe base de todas as classes em Java) e pode ser sobrescrito `(@Override)` para fornecer uma lógica personalizada de comparação.
-
-```java
-@Override
-public boolean equals(Object o) {
-    if (o == null || getClass() != o.getClass()) return false;
-    PalavrasUnicas that = (PalavrasUnicas) o;
-    return Objects.equals(getPalavra(), that.getPalavra());
-}
-```
-
-<b>O que ele faz:</b>
-
-#### 1. Verifica se o objeto é nulo:
-- Se o for `null`, retorna `false`, pois um objeto não pode ser igual a `null`.
-#### 2. Verifica se os objetos são da mesma classe:
-- Usa `getClass() != o.getClass()` para garantir que os objetos sejam da mesma classe. Se não forem, retorna `false`.
-#### 3. Faz o cast do objeto:
-- Converte o objeto o para o tipo `PalavrasUnicas (usando (PalavrasUnicas) o)`.
-#### 4. Compara os atributos relevantes:
-- Usa `Objects.equals(getPalavra()`, `that.getPalavra())` para comparar o atributo palavra dos dois objetos. Se forem iguais, retorna `true`; caso contrário, retorna `false`.
-
-<b>Quando usar:</b>
-- O `equals` é usado quando você precisa comparar dois objetos para verificar se eles são semanticamente iguais (ou seja, se representam a mesma coisa).
-
-### 2. O que é o método hashCode?
-O método `hashCode` retorna um valor numérico (um `int`) que representa o objeto. Ele é usado principalmente em estruturas de dados que <b>dependem de hashing</b>, como `HashSet`, `HashMap` e `HashTable`.
-```java
-@Override
-public int hashCode() {
-    return Objects.hashCode(getPalavra());
-}
-```
-<b>O que ele faz:</b>
-#### 1. Gera um código hash:
-
-- Usa `Objects.hashCode(getPalavra())` para gerar um código hash com base no atributo `palavra`.
-
-#### 2. Garante consistência com o `equals`:
-
-- Se dois objetos são considerados iguais pelo método `equals`, eles devem retornar o mesmo valor de `hashCode`.
-
-<b>Quando usar:</b>
-
- - O `hashCode` é usado em estruturas de dados que dependem de hashing para armazenar e recuperar objetos de forma eficiente.
-### 3. Relação entre `equals` e `hashCode`:
-Existe um contrato entre `equals` e `hashCode` que deve ser respeitado:
-
-#### 1. Consistência:
-
-- Se dois objetos são iguais segundo o `equals`, eles devem ter o mesmo `hashCode`.
-
-- No entanto, o inverso não é verdadeiro: dois objetos com o mesmo `hashCode` não precisam ser iguais segundo o `equals`.
-
-#### 2. Performance:
-
-- Estruturas como `HashSet` e `HashMap` usam o `hashCode` para determinar rapidamente onde um objeto deve ser armazenado ou buscado. Se o `hashCode` for bem implementado, a performance dessas estruturas será otimizada.
-
-### 4. Exemplo prático:
-Vamos supor que você tenha a seguinte classe `PalavrasUnicas`:
-
-```java
-import java.util.Objects;
-
-public class PalavrasUnicas {
-    private String palavra;
-
-    public PalavrasUnicas(String palavra) {
-        this.palavra = palavra;
-    }
+- A interface `Set` é uma coleção que não pode conter elementos duplicados.
+- Essa interface representa o conceito matemático de um conjunto e é usada para representar conjuntos, como um baralho de cartas.
+- A plataforma Java possui três implementações de `Set` de uso geral: `HashSet`, `TreeSet` e `LinkedHashSet`.
+- A interface `Set` não permite acesso aleatório a um elemento na coleção.
+- Para percorrer os elementos de um `Set`, você pode usar um iterador ou um loop foreach.
 
-    public String getPalavra() {
-        return palavra;
-    }
+> ##### *HashSet*: O HashSet é uma implementação da interface Set que armazena os elementos em uma tabela hash. Ele não mantém uma ordem específica dos elementos. A principal vantagem do HashSet é que ele oferece um desempenho de busca muito eficiente, pois usa funções hash para indexar os elementos. No entanto, a ordem em que os elementos são adicionados pode não ser preservada ao percorrer o conjunto.
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        PalavrasUnicas that = (PalavrasUnicas) o;
-        return Objects.equals(getPalavra(), that.getPalavra());
-    }
+> ##### *TreeSet*: O TreeSet é uma implementação da interface Set que armazena os elementos em uma árvore binária balanceada. Isso significa que os elementos são armazenados em uma ordem classificada e são mantidos automaticamente em ordem crescente. A principal vantagem do TreeSet é que os elementos são sempre retornados na ordem classificada, o que facilita a obtenção de elementos em uma determinada ordem. No entanto, a busca e a inserção são um pouco mais lentas em comparação com o HashSet.
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getPalavra());
-    }
+> ##### *LinkedHashSet*: O LinkedHashSet é uma implementação da interface Set que mantém a ordem de inserção dos elementos, além de usar uma tabela hash para obter um bom desempenho de busca. Ele é semelhante ao HashSet, mas também mantém uma lista duplamente vinculada que preserva a ordem de inserção. Isso permite que os elementos sejam percorridos na ordem em que foram adicionados. O LinkedHashSet é útil quando você precisa manter a ordem de inserção dos elementos e também ter um bom desempenho de busca.
 
-    @Override
-    public String toString() {
-        return "PalavrasUnicas{" +
-                "palavra='" + palavra + '\'' +
-                '}';
-    }
-}
-```
-<b>Testando o `equals` e `hashCode`:</b>
-```java
-import java.util.HashSet;
-import java.util.Set;
+### Referências:
 
-public class Main {
-    public static void main(String[] args) {
-        PalavrasUnicas p1 = new PalavrasUnicas("Java");
-        PalavrasUnicas p2 = new PalavrasUnicas("Java");
-        PalavrasUnicas p3 = new PalavrasUnicas("Python");
+[1] "Collections in Java Tutorial." DigitalOcean Community. Disponível em: https://www.digitalocean.com/community/tutorials/collections-in-java-tutorial.
 
-        // Testando o equals
-        System.out.println("p1.equals(p2): " + p1.equals(p2)); // true
-        System.out.println("p1.equals(p3): " + p1.equals(p3)); // false
+[2] "Java™ Platform, Standard Edition 17 API Specification - Class Set." Oracle. Disponível em: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html.
 
-        // Testando o hashCode
-        System.out.println("p1.hashCode(): " + p1.hashCode()); // Código hash baseado em "Java"
-        System.out.println("p2.hashCode(): " + p2.hashCode()); // Mesmo código hash que p1
-        System.out.println("p3.hashCode(): " + p3.hashCode()); // Código hash baseado em "Python"
+## Fixando os Conhecimentos
 
-        // Usando em um HashSet
-        Set<PalavrasUnicas> set = new HashSet<>();
-        set.add(p1);
-        set.add(p2);
-        set.add(p3);
+Exercícios:
 
-        System.out.println("Tamanho do HashSet: " + set.size()); // 2 (p1 e p3, pois p2 é igual a p1)
-    }
-}
-```
-<b> Saída esperada:</b>
-```
-Saída esperada:
-p1.equals(p2): true
-p1.equals(p3): false
-p1.hashCode(): 2301506
-p2.hashCode(): 2301506
-p3.hashCode(): -973197092
-Tamanho do HashSet: 2
-```
+1. Operações Básicas com Set
+2. Pesquisa em Set
+3. Ordenação nas Set
 
-### 5. Por que são importantes?
-- **`Equals`**:
-  - Permite comparar objetos de forma lógica, não apenas por referência.
-  - Fundamental para operações como `contains` em listas ou conjuntos.
-
-- **`HashCode`**:
-
-    - Melhora a performance em estruturas baseadas em hashing.
-
-    - Garante que objetos iguais sejam armazenados no mesmo "bucket" em estruturas como `HashSet` ou `HashMap`.
-
-### 6. Boas práticas:
-#### 1. Sobrescreva `hashCode` sempre que sobrescrever `equals`:
-
-- Isso garante que o contrato entre os dois métodos seja respeitado.
-
-#### 2. Use `Objects.equals` e `Objects.hashCode`:
-
-- Esses métodos ajudam a evitar erros comuns, como `NullPointerException`.
-
-#### 3. Considere todos os atributos relevantes:
-
-- No `equals` e `hashCode`, inclua apenas os atributos que definem a igualdade do objeto.
-## FIXANDO A EXPLICAÇÃO DE CONSISTÊNCIA
-
-A consistência entre `equals` e `hashCode` é um contrato que deve ser seguido em Java. Ele estabelece que:
-
-1. Se dois objetos são iguais segundo o `equals`, eles devem ter o mesmo `hashCode`.
-
-2. O inverso não é obrigatório: dois objetos com o mesmo `hashCode` não precisam ser iguais segundo o `equals`.
-
-Esse contrato é essencial para o funcionamento correto de estruturas de dados baseadas em hashing, como `HashSet`, `HashMap` e `HashTable`.
-
-### Por que essa consistência é importante?
-
-Estruturas de dados como `HashSet` e `HashMap` usam o `hashCode` para organizar e buscar objetos de forma eficiente. Se o contrato não for respeitado, essas estruturas podem não funcionar corretamente.
-
-Por exemplo:
-
-- Se dois objetos são iguais segundo o `equals`, mas têm `hashCode` diferentes, o `HashSet` pode armazenar os dois objetos como se fossem diferentes, o que é incorreto.
-
-- Se dois objetos têm o mesmo `hashCode`, mas são diferentes segundo o `equals`, o `HashSet` ainda funcionará corretamente, mas poderá haver <b>colisões de hash</b>, o que pode afetar a performance.
-
-### Exemplo prático:
-Vamos criar uma classe Produto com dois atributos: `id` e `nome`. Vamos implementar o `equals` e o `hashCode` de duas formas: uma correta (respeitando o contrato) e outra incorreta (quebrando o contrato).
-
-`Classe Produto`:
-
-```java
-import java.util.Objects;
-
-public class Produto {
-    private int id;
-    private String nome;
-
-    public Produto(int id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
-    }
-}
-```
-## Cenário 1: Implementação correta (respeitando o contrato)
-Aqui, o `equals` e o `hashCode` são implementados de forma consistente. O `equals` considera apenas o `id`, e o `hashCode` também é baseado apenas no `id`.
-```java
-@Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Produto produto = (Produto) o;
-    return id == produto.id; // Considera apenas o id para igualdade
-}
-
-@Override
-public int hashCode() {
-    return Objects.hash(id); // Gera hashCode apenas com o id
-}
-```
-<b>Testando</b>
-```java
-import java.util.HashSet;
-import java.util.Set;
-
-public class Main {
-    public static void main(String[] args) {
-        Produto p1 = new Produto(1, "Notebook");
-        Produto p2 = new Produto(1, "Notebook"); // Mesmo id, mesmo objeto
-        Produto p3 = new Produto(2, "Teclado"); // Id diferente
-
-        Set<Produto> set = new HashSet<>();
-        set.add(p1);
-        set.add(p2);
-        set.add(p3);
-
-        System.out.println("Tamanho do HashSet: " + set.size()); // 2 (p1 e p3)
-        System.out.println("p1.equals(p2): " + p1.equals(p2)); // true
-        System.out.println("p1.hashCode() == p2.hashCode(): " + (p1.hashCode() == p2.hashCode())); // true
-    }
-}
-```
-<b>Saída Esperada</b>
-```
-Tamanho do HashSet: 2
-p1.equals(p2): true
-p1.hashCode() == p2.hashCode(): true
-```
-<b>Explicação</b>
-
-`p1` e `p2` têm o mesmo `id`, então são considerados iguais pelo `equals` e têm o mesmo `hashCode`.
-
-O `HashSet` não adiciona `p2` porque ele já contém um objeto igual `(p1)`.
-
-`p3` tem um `id` diferente, então é adicionado ao conjunto.
-
-## Cenário 2: Implementação incorreta (quebrando o contrato)
-Agora, vamos quebrar o contrato. O `equals` continua considerando apenas o `id`, mas o `hashCode` é baseado no nome. Isso viola a regra de consistência.
-```java
-@Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    Produto produto = (Produto) o;
-    return id == produto.id; // Considera apenas o id para igualdade
-}
-
-@Override
-public int hashCode() {
-    return Objects.hash(nome); // Gera hashCode com o nome (errado!)
-}
-```
-<b>Testando</b>
-```java
-import java.util.HashSet;
-import java.util.Set;
-
-public class Main {
-    public static void main(String[] args) {
-        Produto p1 = new Produto(1, "Notebook");
-        Produto p2 = new Produto(1, "Notebook"); // Mesmo id, mesmo objeto
-        Produto p3 = new Produto(2, "Teclado"); // Id diferente
-
-        Set<Produto> set = new HashSet<>();
-        set.add(p1);
-        set.add(p2);
-        set.add(p3);
-
-        System.out.println("Tamanho do HashSet: " + set.size()); // 3 (errado!)
-        System.out.println("p1.equals(p2): " + p1.equals(p2)); // true
-        System.out.println("p1.hashCode() == p2.hashCode(): " + (p1.hashCode() == p2.hashCode())); // true (por acaso)
-    }
-}
-```
-<b>Saída Esperada</b>
-
-```
-Tamanho do HashSet: 3
-p1.equals(p2): true
-p1.hashCode() == p2.hashCode(): true
-```
-
-<b>Explicação:</b>
-
-- `p1` e `p2` são iguais segundo o `equals`, mas o `hashCode` é baseado no nome. Como o nome é o mesmo, o `hashCode` acaba sendo igual por coincidência.
-
-- No entanto, se o nome fosse diferente, o `hashCode` seria diferente, e o `HashSet` armazenaria `p1` e `p2` como objetos distintos, mesmo que eles fossem iguais segundo o `equals`. Isso quebra o contrato e causa comportamentos inesperados.
-
-## Conclusão:
-A consistência entre `equals` e `hashCode` garante que:
-
-1. Objetos iguais segundo o `equals` tenham o mesmo `hashCode`.
-
-2. Estruturas de dados como `HashSet` e `HashMap` funcionem corretamente.
-
-Se você quebrar esse contrato, pode causar bugs difíceis de detectar, como objetos duplicados em conjuntos ou chaves perdidas em mapas.
-
-Se ainda tiver dúvidas, é só perguntar! 😊
+## Operações Básicas com Set
+
+### 1. Conjunto de Convidados
+
+<p>Crie uma classe chamada "ConjuntoConvidados" que possui um conjunto de objetos do tipo "Convidado" como atributo. Cada convidado possui atributos como nome e código do convite. Implemente os seguintes métodos:
+
+- `adicionarConvidado(String nome, int codigoConvite)`: Adiciona um convidado ao conjunto.
+- `removerConvidadoPorCodigoConvite(int codigoConvite)`: Remove um convidado do conjunto com base no código do convite.
+- `contarConvidados()`: Conta o número total de convidados no Set.
+- `exibirConvidados()`: Exibe todos os convidados do conjunto.
+</p>
+
+### 2. Conjunto de Palavras Únicas
+
+<p>
+Crie uma classe chamada "ConjuntoPalavrasUnicas" que possui um conjunto de palavras únicas como atributo. Implemente os seguintes métodos:
+
+- `adicionarPalavra(String palavra)`: Adiciona uma palavra ao conjunto.
+- `removerPalavra(String palavra)`: Remove uma palavra do conjunto.
+- `verificarPalavra(String palavra)`: Verifica se uma palavra está presente no conjunto.
+- `exibirPalavrasUnicas()`: Exibe todas as palavras únicas do conjunto.
+</p>
+
+----
+
+## Pesquisa em Set
+
+### 1. Agenda de Contatos
+
+<p>
+Crie uma classe chamada "AgendaContatos" que possui um conjunto de objetos do tipo "Contato" como atributo. Cada contato possui atributos como nome e número de telefone. Implemente os seguintes métodos:
+
+- `adicionarContato(String nome, int numero)`: Adiciona um contato à agenda.
+- `exibirContatos()`: Exibe todos os contatos da agenda.
+- `pesquisarPorNome(String nome)`: Pesquisa contatos pelo nome e retorna uma conjunto com os contatos encontrados.
+- `atualizarNumeroContato(String nome, int novoNumero)`: Atualiza o número de telefone de um contato específico.
+</p>
+
+### 2. Lista de Tarefas
+
+<p>
+Crie uma classe chamada "ListaTarefas" que possui um conjunto de objetos do tipo "Tarefa" como atributo. Cada tarefa possui um atributo de descrição e um atributo booleano para indicar se a tarefa foi concluída ou não. Implemente os seguintes métodos:
+
+- `adicionarTarefa(String descricao)`: Adiciona uma nova tarefa ao Set.
+- `removerTarefa(String descricao)`: Remove uma tarefa do Set de acordo com a descrição, se estiver presente. 
+- `exibirTarefas()`: Exibe todas as tarefas da lista de tarefas.
+- `contarTarefas()`: Conta o número total de tarefas na lista de tarefas.
+- `obterTarefasConcluidas()`: Retorna um Set com as tarefas concluídas.
+- `obterTarefasPendentes()`: Retorna um Set com as tarefas pendentes.
+- `marcarTarefaConcluida(String descricao)`: Marca uma tarefa como concluída de acordo com a descrição.
+- `marcarTarefaPendente(String descricao)`: Marca uma tarefa como pendente de acordo com a descrição.
+- `limparListaTarefas()`: Remove todas as tarefas da lista de tarefas.
+</p>
+
+---
+
+## Ordenação em Set
+
+### 1. Cadastro de Produtos
+
+<p>
+Crie uma classe chamada "CadastroProdutos" que possui um conjunto de objetos do tipo "Produto" como atributo. Cada produto possui atributos como nome, cod, preço e quantidade. Implemente os seguintes métodos:
+
+- `adicionarProduto(long cod, String nome, double preco, int quantidade)`: Adiciona um produto ao cadastro.
+- `exibirProdutosPorNome()`: Exibe todos os produtos do cadastro em ordem alfabética pelo nome.
+- `exibirProdutosPorPreco()`: Exibe todos os produtos do cadastro em ordem crescente de preço.
+</p>
+
+### 2. Lista de Alunos
+
+<p>
+Crie uma classe chamada "GerenciadorAlunos" que irá lidar com uma lista de alunos. Cada aluno terá atributos como nome, matrícula e nota. Implementaremos os seguintes métodos:
+
+- `adicionarAluno(String nome, Long matricula, double media)`: Adiciona um aluno ao conjunto.
+- `removerAluno(long matricula)`: Remove um aluno ao conjunto a partir da matricula, se estiver presente.
+- `exibirAlunosPorNome()`: Exibe todos os alunos do conjunto em ordem alfabética pelo nome.
+- `exibirAlunosPorNota()`: Exibe todos os alunos do conjunto em ordem crescente de nota.
+- `exibirAlunos()`: Exibe todos os alunos do conjunto.
+</p>
+
+---
+### Dúvidas e Suporte
+
+Caso você tenha alguma dúvida, problema ou sugestão, fique à vontade para abrir uma issue no repositório. Espero conseguir te ajudar! (:
